@@ -43,11 +43,16 @@ BACKUPFOLDER=$VOLUME/Backup/$VERSION/$FAZIT/$TOPIC/$SKINNAME
 echo Mounting app folder.
 mount -uw /mnt/app
 
-echo Making backup folders on SD-card.
-mkdir -p $BACKUPFOLDER
+if [ -s $BACKUPFOLDER/images.mcf ]; then
+	echo Backup is already available in SD-Card
 
-echo Copying file to backup folder on SD-card.
-cp /eso/hmi/lsd/Resources/$SKINNAME/images.mcf $BACKUPFOLDER/images.mcf
+else
+	echo Making backup folders on SD-card.
+	mkdir -p $BACKUPFOLDER
+
+	echo Copying file to backup folder on SD-card.
+	cp /eso/hmi/lsd/Resources/$SKINNAME/images.mcf $BACKUPFOLDER/images.mcf
+fi
 
 echo Copying modified files from SD Skinfiles folder to MIB.
 cp /$VOLUME/$TOPIC/$SKINNAME/images.mcf /eso/hmi/lsd/Resources/$SKINNAME/images.mcf
